@@ -1,0 +1,80 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3  d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Grupe</h6>
+    <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#groupModal" >Kreiraj grupu</button>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table *ngIf="fetched" datatable="ng" [dtOptions]="dtOptions" class="table table-bordered table-hover" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+          <th>Ime grupe</th>
+          <th>Broj korisnika u grupi</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let group of groups">
+          <td>{{group.name}}</td>
+          <td>{{group.numberOfUsers}}</td>
+          <td>
+            <a [routerLink]="['/admin/groups', group.id]" class="btn btn-info btn-circle btn-sm"><i
+              class="fas fa-info-circle"></i></a> &nbsp;
+            <span style="cursor: pointer; margin-left: 5px"
+                  mwlConfirmationPopover
+                  popoverTitle="Da li ste sigurni?"
+                  popoverMessage="Da li ste sigurni da želite da izbrišete grupu?"
+                  placement="left"
+                  (confirm)="delete(group.id)"
+            ><span class="fa fa-trash-alt text-danger"></span></span>
+            <!--            <button type="button" (click)="deleteUser(user.userName)" class="btn btn-danger btn-circle btn-sm"><i-->
+            <!--              class="fas fa-trash"></i></button>&nbsp;-->
+            <!--            <button *ngIf="!pilots" (click)="resetPassword(user.userName)" type="button" class="btn btn-warning btn-circle btn-sm"><i-->
+            <!--              class="fas fa-key"></i></button>-->
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="modal-body">
+          <div class="custom-control custom-switch">
+          </div>
+          <div class="form-group">
+            <label class="text-primary" for="name">Ime grupe</label>
+            <input class="form-control" id="name" name="name" placeholder="Unesite ime grupe" [(ngModel)]="form.name" required
+                   #name="ngModel">
+          </div>
+          <h6>Korisnici</h6>
+          <div class="form-group" *ngFor="let user of form.users let i = index">
+            <label class="text-primary" for="user{{i}}">Email korisnika</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="user{{i}}"
+                     name="user{{i}}" aria-describedby="repositoryNameHelp" placeholder="Unesite email"
+                     [(ngModel)]="form.users[i].name">
+              <button (click)="removeUser(i)" type="button" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 offset-8 mb-4">
+            <button type="button" class="btn btn-info btn-sm" (click)="addUser()">Dodaj korisnika</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="closeModalButton" type="button" class="btn btn-secondary"
+                  data-dismiss="modal">Zatvori</button>
+          <button type="submit" class="btn btn-primary">Kreiraj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

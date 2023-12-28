@@ -1,0 +1,63 @@
+<div class="container">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-3 d-none d-lg-block"></div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Dobrodošli na sistem za ankete</h1>
+                  <h5 class="h5 text-gray-900 mb-4">Unesite vaše podatke kako bi pristupili</h5>
+                </div>
+                <form class="user" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email"
+                           name="email" aria-describedby="emailHelp" placeholder="Unesite email"
+                           [(ngModel)]="form.email" required #email="ngModel">
+                    <div class="alert alert-danger" role="alert"
+                         *ngIf="email.errors && f.submitted">
+                      Email je obavezan!
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" id="password"
+                           name="password" placeholder="Unesite lozinku" [(ngModel)]="form.password" required
+                           #password="ngModel">
+                    <div class="alert alert-danger" role="alert"
+                         *ngIf="password.errors && f.submitted">
+                      <div *ngIf="password.errors">Lozinka je obavezna</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-block">
+                    Prijava
+                  </button>
+                  <div class="form-group"><br>
+                    <div class="alert alert-danger" role="alert"
+                         *ngIf="f.submitted && isLoginFailed">
+                      {{ errorMessage }}
+                    </div>
+                  </div>
+                  <hr>
+                  <p>Nemate nalog? <a [routerLink]="['/register']">Registracija</a> <br>
+                    Zboravljena lozinka? <a [routerLink]="['/forgot-password']">Zatražite reset</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-3 d-none d-lg-block"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

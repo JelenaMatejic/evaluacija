@@ -1,0 +1,16 @@
+<div class="row" *ngFor="let question of survey.questions">
+  <div class="card shadow mb-4 col-lg-12">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{question.question}}</h6>
+    </div>
+    <div class="card-body">
+      <div class="row" *ngFor="let answer of question.answers" >
+        <div class="col-md-12" *ngIf="isAdmin || (answer.from.name !== name && answer.to.name === name)">
+          <div class="form-group">
+            <textarea disabled [(ngModel)]="answer.answer" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

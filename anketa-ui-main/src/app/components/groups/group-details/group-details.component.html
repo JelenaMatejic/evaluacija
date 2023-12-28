@@ -1,0 +1,175 @@
+<div class="row">
+  <!-- Content Column -->
+  <div class="col-lg-12 mb-12">
+    <!-- Project Card Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3  d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Podaci o grupi</h6>
+        <a [routerLink]="['/admin/groups']"  class="btn btn-secondary">Nazad</a>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      Ime grupe</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      {{ group.name }}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-id-badge fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      ID Grupe</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      {{ group.id }}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-key fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      Broj korisnika u grupi</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      {{ group.numberOfUsers }}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 mb-12">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3  d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Korisnici</h6>
+      <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#groupModal" >Dodaj korisnika</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table datatable="ng" [dtOptions]="dtOptions" class="table table-bordered table-hover" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>Ime</th>
+            <th>Email</th>
+            <th>Akcije</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of group.users">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <a [routerLink]="['/admin/users', user.id]" class="btn btn-info btn-circle btn-sm"><i
+                class="fas fa-info-circle"></i></a> &nbsp;
+              <span style="cursor: pointer; margin-left: 5px"
+                    mwlConfirmationPopover
+                    popoverTitle="Da li ste sigurni?"
+                    popoverMessage="Da li ste sigurni da želite da uklonite korisnika iz grupe?"
+                    placement="left"
+                    (confirm)="delete(user.id)"
+              ><span class="fa fa-trash-alt text-danger"></span></span>
+              <!--            <button type="button" (click)="deleteUser(user.userName)" class="btn btn-danger btn-circle btn-sm"><i-->
+              <!--              class="fas fa-trash"></i></button>&nbsp;-->
+              <!--            <button *ngIf="!pilots" (click)="resetPassword(user.userName)" type="button" class="btn btn-warning btn-circle btn-sm"><i-->
+              <!--              class="fas fa-key"></i></button>-->
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 mb-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3  d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Korisnici koji su dodati ali nisu registrovani</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table datatable="ng" [dtOptions]="dtOptions" class="table table-bordered table-hover" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let u of group.toAdd.emails">
+              <td>{{u}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="modal-body">
+          <h6>Korisnici</h6>
+          <div class="form-group" *ngFor="let user of form.users let i = index">
+            <label class="text-primary" for="user{{i}}">Email korisnika</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="user{{i}}"
+                     name="user{{i}}" aria-describedby="repositoryNameHelp" placeholder="Unesite email"
+                     [(ngModel)]="form.users[i].name">
+              <button (click)="removeUser(i)" type="button" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1 offset-10 mb-4">
+            <button type="button" class="btn btn-info btn-sm" (click)="addUser()"><span class="fa fa-plus"></span></button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="closeModalButton" type="button" class="btn btn-secondary float-right"
+                  data-dismiss="modal">Zatvori</button>
+          <button type="submit" class="btn btn-primary">Dodaj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

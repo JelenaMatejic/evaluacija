@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xl-4 col-md-4 mb-2" *ngFor="let survey of surveys">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="h4 text-xl font-weight-bold text-success text-uppercase mb-1">
+              {{survey.name}}
+            </div>
+          <div class="col-auto" *ngIf="survey.canDo">
+            <a [routerLink]="['/central/users-survey', survey.id]"  style="cursor: pointer;"><span class="fas fa-arrow-right fa-2x text-gray-300"></span></a>
+          </div>
+            <div class="col-auto" *ngIf="!survey.canDo">
+              <a [routerLink]="['/central/users-survey-result', survey.id]"  style="cursor: pointer;"><span class="fas fa-info fa-2x text-gray-300"></span></a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="card shadow mb-4 col-lg-12">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Profil</h6>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="user" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input disabled type="email" class="form-control" id="email"
+                         name="email" aria-describedby="emailHelp" placeholder="Unesite email"
+                         [(ngModel)]="form.email" required #email="ngModel">
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="email.errors && f.submitted">
+                    Email je obavezan!
+                  </div>
+                </div>
+              </div>
+<!--              <div class="col-md-4">-->
+<!--                <div class="form-group">-->
+<!--                  <label>Ime i prezime</label>-->
+<!--                  <input disabled type="text" class="form-control" id="name"-->
+<!--                         name="name" aria-describedby="nameHelp" placeholder="Unesite ime"-->
+<!--                         [(ngModel)]="form.name" required #name="ngModel">-->
+<!--                  <div class="alert alert-danger" role="alert"-->
+<!--                       *ngIf="name.errors && f.submitted">-->
+<!--                    Ime i prezime je obavezno!-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group"><br>
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="f.submitted && requestFailed">
+                    {{ errorMessage }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button disabled class="btn btn-warning float-right">
+              Izmeni profil
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card shadow mb-4 col-lg-12">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Promenite lozinku</h6>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="user" (ngSubmit)="f.form.valid && onSubmitPassword()" #f="ngForm" novalidate>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Trenutna lozinka</label>
+                  <input type="password" class="form-control" id="currentPassword"
+                         name="currentPassword" aria-describedby="currentPasswordHelp" placeholder="Unesite trenutnu lozinku"
+                         [(ngModel)]="formPassword.currentPassword" required #currentPassword="ngModel">
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="currentPassword.errors && f.submitted">
+                    Trenutna lozinka je obavezna!
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Nova lozinka</label>
+                  <input type="password" class="form-control" id="newPassword"
+                         name="currentPassword" aria-describedby="newPasswordHelp" placeholder="Unesite novu lozinku"
+                         [(ngModel)]="formPassword.newPassword" required #newPassword="ngModel">
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="newPassword.errors && f.submitted">
+                    Nova lozinka je obavezna!
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ponovite novu lozinku</label>
+                  <input type="password" class="form-control" id="repeatPassword"
+                         name="repeatPassword" aria-describedby="repeatPasswordHelp" placeholder="Ponovite novu lozinku"
+                         [(ngModel)]="formPassword.repeatPassword" required #repeatPassword="ngModel">
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="repeatPassword.errors && f.submitted">
+                    Ponovljena lozinka je obavezna!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group"><br>
+                  <div class="alert alert-danger" role="alert"
+                       *ngIf="requestPasswordFailed">
+                    {{ errorMessagePassword }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-warning float-right">
+              Promeni lozinku
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
